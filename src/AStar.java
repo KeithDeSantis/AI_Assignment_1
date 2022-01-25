@@ -16,7 +16,7 @@ public class AStar {
 
         while(!pQueue.isEmpty()){
             Coordinate cur = pQueue.poll();
-            Direction curDir = cur.direction;
+            Direction curDir = cur.direction; // I'm not sure direction should be directly connected to coords, it seems like it should be separate as it can lead to NullPtrs and is independent of the coord, its an attribute of the player
 
             boolean hasBashed = false;
             if(cur.equals(g)) return;
