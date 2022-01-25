@@ -34,7 +34,7 @@ public class AStar {
                     }
                     next = CoordinateFactory.makeOrdinaryCoor(nextI, nextJ);
                     //cost based on terrain complexity
-                    new_cost = costSoFar.get(cur) + Integer.getInteger(board[nextI][nextJ]);
+                    new_cost = costSoFar.get(cur) + Integer.parseInt(board[nextI][nextJ]);
                 }
 
                 if(action.equals(Action.Bash)){

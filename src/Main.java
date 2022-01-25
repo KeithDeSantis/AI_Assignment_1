@@ -19,6 +19,8 @@ public class Main {
 
         } catch (IOException e) { System.out.println("Could not find file.");}
 
+        Coordinate[][] coordBoard = boardReader.translateToCoord(board);
+
         AStar test = new AStar();
         Coordinate s = CoordinateFactory.makeCoorWithPriority(1,0, 3);
 //        Coordinate g = CoordinateFactory.makeCoorWithPriority(2,1, 4);
@@ -30,7 +32,7 @@ public class Main {
 
         s.setDirection(Direction.N);
         test.findPath(board, s, CoordinateFactory.makeOrdinaryCoor(0,2));
-
+        int h = 0;
     }
 
 }

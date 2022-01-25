@@ -52,5 +52,26 @@ public class BoardReader {
 
     }
 
+    public Coordinate[][] translateToCoord(String[][] board) {
+
+        int numRows = board.length;
+        int numColumns = board[0].length;
+
+        Coordinate[][] coordBoard = new Coordinate[numRows][numColumns];
+
+        for (int i = 0; i < numRows; i++) {
+
+            for (int j = 0; j < numColumns; j++) {
+
+                coordBoard[i][j] = new Coordinate(i, j);
+
+            }
+
+        }
+
+        return coordBoard;
+
+    }
+
 
 }
