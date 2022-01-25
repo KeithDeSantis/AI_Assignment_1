@@ -4,6 +4,8 @@ public enum Direction {
     int i,j;
 
 
-    Direction(int i, int i1) {
+    Direction(int i, int j) {
+        this.i = i;
+        this.j = j;
     }
 }
