@@ -32,7 +32,6 @@ public class Main {
 
         s.setDirection(Direction.N);
         test.findPath(board, s, CoordinateFactory.makeOrdinaryCoor(0,2));
-        int h = 0;
     }
 
 }
