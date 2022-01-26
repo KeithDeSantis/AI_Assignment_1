@@ -6,9 +6,9 @@ public class AStar {
 
     //s and g should have its priority of 0
     //s should have default dir of N
-    public void findPath(String[][] board, Coordinate s, Coordinate g){
-        PriorityQueue<Coordinate> pQueue = new PriorityQueue<>(Comparator.comparingInt(o -> o.priority));
-        pQueue.add(s);
+    public void findPath(int[][] board, Coordinate s, Coordinate g){
+        PriorityQueue<Move> pQueue = new PriorityQueue<>(Comparator.comparingInt(o -> o.getPriority()));
+        pQueue.add(new Move(s, 0));
         Map<Coordinate,Coordinate> cameFrom = new HashMap<>();
         Map<Coordinate, Integer> costSoFar = new HashMap<>();
         cameFrom.put(s, null);
@@ -19,9 +19,11 @@ public class AStar {
             Direction curDir = currentMove.getDirection();
 
             boolean hasBashed = false;
-            if(cur.equals(g)) return;
+            if(currentMove.getCoordinate().equals(g)) return; // deals with edge case that start and goal are the same
             for (Action action: Action.values()) {
-                int new_cost = 0;
+                Move nextMove = new Move(currentMove, action, board[currentMove.getI()][currentMove.getJ()]);
+                Set<Coordinate> keys = costSoFar.keySet();
+/*                int new_cost = 0;
                 int nextI = 0, nextJ = 0;
                 Coordinate next=null;
                 Set<Coordinate> keys = costSoFar.keySet();
@@ -59,10 +61,9 @@ public class AStar {
                     next = CoordinateFactory.makeOrdinaryCoor(cur.i, cur.j);
                     next.setDirection(newDir);
                     new_cost = (int)Math.ceil(1.5 * costSoFar.get(cur));
-                }
+                }*/
 
-
-
+                Coordinate nextMoveCoordinate = nextMove.getCoordinate();
                 //update the queue accordingly
                 if(!keys.contains(nextMoveCoordinate) || nextMove.getTotalCost() < costSoFar.get(nextMoveCoordinate)){
                     costSoFar.put(nextMoveCoordinate, nextMove.getTotalCost());
