@@ -1,5 +1,6 @@
-import java.util.Set;
+import java.util.ArrayList;
 import java.lang.StringBuilder;
+import java.util.List;
 
 /**
  * Class that represents the result of a search.

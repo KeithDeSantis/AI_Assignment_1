@@ -3,6 +3,10 @@ import java.util.*;
 public class AStar {
 
     HeuristicFunction.heuristicFunction heuristicFunction = HeuristicFunction.NoHeuristics; //TODO temporary for testing
+    Map<Move,Move> cameFrom;
+    Map<Move, Integer> costSoFar;
+    Move firstMove = null;
+    int numNodesExpanded = 0;
 
     public AStar(HeuristicFunction.heuristicFunction heuristicFunction){
         this.heuristicFunction = heuristicFunction;
@@ -28,10 +32,10 @@ public class AStar {
         firstMove = new Move(s, 0);
         firstMove.setDirection(Direction.N);
         pQueue.add(firstMove);
-        Map<Coordinate,Coordinate> cameFrom = new HashMap<>();
-        Map<Coordinate, Integer> costSoFar = new HashMap<>();
-        cameFrom.put(s, null);
-        costSoFar.put(s,0);
+        cameFrom = new HashMap<>();
+        costSoFar = new HashMap<>();
+        cameFrom.put(firstMove, null);
+        costSoFar.put(firstMove,0);
 
         int iMax = board.length;
         int jMax = board[0].length;
@@ -41,7 +45,7 @@ public class AStar {
             Direction curDir = currentMove.getDirection();
 
             boolean hasBashed = false;
-            if(currentMove.getCoordinate().equals(g)) return; // deals with edge case that start and goal are the same
+            if(currentMove.getCoordinate().equals(g)) return currentMove; // deals with edge case that start and goal are the same
             for (Action action: Action.values()) {
 
                 if(!currentMove.isPossible(action)) continue;
@@ -54,8 +58,8 @@ public class AStar {
 
                 Coordinate nextMoveCoordinate = nextMove.getCoordinate();
                 //update the queue accordingly
-                if(!keys.contains(nextMoveCoordinate) || nextMove.getTotalCost() < costSoFar.get(nextMoveCoordinate)){
-                    costSoFar.put(nextMoveCoordinate, nextMove.getTotalCost());
+                if(!keys.contains(nextMove) || nextMove.getTotalCost() < costSoFar.get(nextMove)){
+                    costSoFar.put(nextMove, nextMove.getTotalCost());
                     int heuristic = heuristicFunction.getHeuristics(nextMove.getCoordinate(), g);
                     nextMove.setPriority(heuristic);
                     pQueue.add(nextMove);
@@ -65,6 +69,7 @@ public class AStar {
                 }
             }
         }
+        return null;
     }
 
     public ArrayList<Move> buildPath(Move lastMove, Move firstMove) {
