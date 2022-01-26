@@ -25,7 +25,7 @@ public class Main {
         Coordinate[][] coordBoard = boardReader.translateToCoord(board);
 
         AStar test = new AStar();
-        Coordinate s = CoordinateFactory.makeCoorWithPriority(1,0, 3);
+//        Coordinate s = CoordinateFactory.makeCoorWithPriority(1,0, 3);
 //        Coordinate g = CoordinateFactory.makeCoorWithPriority(2,1, 4);
 //        PriorityQueue<Coordinate> pQueue = new PriorityQueue<>(Comparator.comparingInt(o -> o.priority));
 //        pQueue.add(s);
@@ -33,8 +33,8 @@ public class Main {
 //        System.out.println(pQueue.remove().priority);
 //        System.out.println(pQueue.remove().priority);
 
-        s.setDirection(Direction.N);
-        test.findPath(board, s, CoordinateFactory.makeOrdinaryCoor(0,2));
+        start.setDirection(Direction.N);
+        test.findPath(board, start, goal);
     }
 
 }

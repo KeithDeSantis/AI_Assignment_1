@@ -2,7 +2,7 @@ import java.util.*;
 
 public class AStar {
 
-    HeuristicFunction.heuristicFunction heuristicFunction;
+    HeuristicFunction.heuristicFunction heuristicFunction = HeuristicFunction.NoHeuristics; //TODO temporary for testing
 
     //s and g should have its priority of 0
     //s should have default dir of N
