@@ -1,5 +1,5 @@
 public enum Direction {
-    N(0,1),S(0,-1),E(1,0),W(-1,0);
+    N(-1,0),S(1,0),E(0,1),W(0,-1);
 
     int i,j;
 

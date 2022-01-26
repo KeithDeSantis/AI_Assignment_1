@@ -9,11 +9,14 @@ public class Main {
 
         BoardReader boardReader = new BoardReader();
 
-        String[][] board = null;
+        int[][] board = null;
+
+        Coordinate start = new Coordinate(0,0);
+        Coordinate goal = new Coordinate(0,0);
 
         try {
 
-            board = boardReader.read("board.txt");
+            board = boardReader.read("board.txt", start, goal);
             //System.out.println(Arrays.deepToString(board));
 //            System.out.println(board[1][0]);
 

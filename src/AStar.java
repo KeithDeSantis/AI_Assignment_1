@@ -15,8 +15,8 @@ public class AStar {
         costSoFar.put(s,0);
 
         while(!pQueue.isEmpty()){
-            Coordinate cur = pQueue.poll();
-            Direction curDir = cur.direction; // I'm not sure direction should be directly connected to coords, it seems like it should be separate as it can lead to NullPtrs and is independent of the coord, its an attribute of the player
+            Move currentMove = pQueue.poll();
+            Direction curDir = currentMove.getDirection();
 
             boolean hasBashed = false;
             if(cur.equals(g)) return;
@@ -64,11 +64,12 @@ public class AStar {
 
 
                 //update the queue accordingly
-                if(!keys.contains(next) || new_cost < costSoFar.get(next)){
-                    costSoFar.put(next,new_cost);
-                    Coordinate coordinateWithPriority = CoordinateFactory.makeCoorWithPriority(nextI, nextJ, new_cost + Math.abs(g.i - nextI) + Math.abs(g.j - nextJ));//later rewrite to use different heuristics, functional interface
-                    pQueue.add(coordinateWithPriority);
-                    cameFrom.put(next, cur);
+                if(!keys.contains(nextMoveCoordinate) || nextMove.getTotalCost() < costSoFar.get(nextMoveCoordinate)){
+                    costSoFar.put(nextMoveCoordinate, nextMove.getTotalCost());
+                    int heuristic = heuristicFunction.getHeuristics(nextMove.getCoordinate(), g);
+                    nextMove.setPriority(heuristic);
+                    pQueue.add(nextMove);
+                    cameFrom.put(nextMove.getCoordinate(), currentMove.getCoordinate());
 
                     if(hasBashed){// removes the flag
                         hasBashed = false;

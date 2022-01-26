@@ -7,7 +7,7 @@ public class BoardReader {
     public BoardReader() {
     }
 
-    public String[][] read(String fileName) throws IOException {
+    public int[][] read(String fileName, Coordinate s, Coordinate g) throws IOException {
 
         int numLines = 0;
 
@@ -48,11 +48,15 @@ public class BoardReader {
             }
             System.out.println();
         }
-        return board;
+
+
+        findStartAndGoal(board, s, g);
+
+        return convertToInt(board);
 
     }
 
-    public Coordinate[][] translateToCoord(String[][] board) {
+    public Coordinate[][] translateToCoord(int[][] board) {
 
         int numRows = board.length;
         int numColumns = board[0].length;
@@ -70,6 +74,49 @@ public class BoardReader {
         }
 
         return coordBoard;
+
+    }
+
+    public void findStartAndGoal(String[][] board, Coordinate start, Coordinate goal) {
+
+        int numRows = board.length;
+        int numColumns = board[0].length;
+
+        for (int i = 0; i < numRows; i++) {
+
+            for (int j = 0; j < numColumns; j++) {
+
+                switch (board[i][j]) {
+                    case "S":
+                        start.setI(i);
+                        start.setJ(j);
+                        board[i][j] = "1";
+                        break;
+                    case "G":
+                        goal.setI(i);
+                        goal.setJ(j);
+                        board[i][j] = "1";
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+        }
+
+    }
+
+    public int[][] convertToInt(String[][] board) {
+
+        int[][] intBoard = new int[board.length][board[0].length];
+
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                intBoard[i][j] = Integer.parseInt(board[i][j]);
+            }
+        }
+
+        return intBoard;
 
     }
 
