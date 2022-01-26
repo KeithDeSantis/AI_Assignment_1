@@ -15,15 +15,9 @@ public class CostCalculator {
 
     }
 
-    private static CostFinder Forward = (int terrainCost, int totalCost) -> {
-        return terrainCost + totalCost;
-    };
+    private static final CostFinder Forward = Integer::sum;
 
-    private static CostFinder Bash = (int terrainCost, int totalCost) -> {
-        return 3 + totalCost;
-    };
+    private static final CostFinder Bash = (int terrainCost, int totalCost) -> 3 + totalCost;
 
-    private static CostFinder Turn = (int terrainCost, int totalCost) -> {
-        return (int)Math.ceil(terrainCost * .5) + totalCost;
-    };
+    private static final CostFinder Turn = (int terrainCost, int totalCost) -> (int)Math.ceil(terrainCost * .5) + totalCost;
 }

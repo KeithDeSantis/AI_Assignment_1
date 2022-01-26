@@ -4,6 +4,10 @@ public class AStar {
 
     HeuristicFunction.heuristicFunction heuristicFunction = HeuristicFunction.NoHeuristics; //TODO temporary for testing
 
+    public AStar(HeuristicFunction.heuristicFunction heuristicFunction){
+        this.heuristicFunction = heuristicFunction;
+    }
+
     //s and g should have its priority of 0
     //s should have default dir of N
     public void findPath(int[][] board, Coordinate s, Coordinate g){
@@ -31,6 +35,27 @@ public class AStar {
                     continue;
                 }
                 Set<Coordinate> keys = costSoFar.keySet();
+
+                Coordinate nextMoveCoordinate = nextMove.getCoordinate();
+                //update the queue accordingly
+                if(!keys.contains(nextMoveCoordinate) || nextMove.getTotalCost() < costSoFar.get(nextMoveCoordinate)){
+                    costSoFar.put(nextMoveCoordinate, nextMove.getTotalCost());
+                    int heuristic = heuristicFunction.getHeuristics(nextMove.getCoordinate(), g);
+                    nextMove.setPriority(heuristic);
+                    pQueue.add(nextMove);
+                    cameFrom.put(nextMove.getCoordinate(), currentMove.getCoordinate());
+
+                    if(hasBashed){// removes the flag
+                        hasBashed = false;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 /*                int new_cost = 0;
                 int nextI = 0, nextJ = 0;
                 Coordinate next=null;
@@ -71,25 +96,3 @@ public class AStar {
                     new_cost = (int)Math.ceil(1.5 * costSoFar.get(cur));
                 }*/
 
-                Coordinate nextMoveCoordinate = nextMove.getCoordinate();
-                //update the queue accordingly
-                if(!keys.contains(nextMoveCoordinate) || nextMove.getTotalCost() < costSoFar.get(nextMoveCoordinate)){
-                    costSoFar.put(nextMoveCoordinate, nextMove.getTotalCost());
-                    int heuristic = heuristicFunction.getHeuristics(nextMove.getCoordinate(), g);
-                    nextMove.setPriority(heuristic);
-                    pQueue.add(nextMove);
-                    cameFrom.put(nextMove.getCoordinate(), currentMove.getCoordinate());
-
-                    if(hasBashed){// removes the flag
-                        hasBashed = false;
-                        break;
-                    }
-                }
-            }
-        }
-
-    }
-
-
-
-}
