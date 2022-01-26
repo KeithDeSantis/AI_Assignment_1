@@ -6,7 +6,7 @@ public class AStar {
 
     //s and g should have its priority of 0
     //s should have default dir of N
-    public void findPath(int[][] board, Coordinate s, Coordinate g){
+    public Result findPath(int[][] board, Coordinate s, Coordinate g){
         PriorityQueue<Move> pQueue = new PriorityQueue<>(Comparator.comparingInt(o -> o.getPriority()));
         pQueue.add(new Move(s, 0));
         Map<Coordinate,Coordinate> cameFrom = new HashMap<>();
@@ -19,7 +19,7 @@ public class AStar {
             Direction curDir = currentMove.getDirection();
 
             boolean hasBashed = false;
-            if(currentMove.getCoordinate().equals(g)) return; // deals with edge case that start and goal are the same
+            if(currentMove.getCoordinate().equals(g)) return new Result(); // deals with edge case that start and goal are the same, will have to populate the result properly
             for (Action action: Action.values()) {
                 Move nextMove = new Move(currentMove, action, board[currentMove.getI()][currentMove.getJ()]);
                 Set<Coordinate> keys = costSoFar.keySet();
@@ -79,6 +79,8 @@ public class AStar {
                 }
             }
         }
+
+        return new Result(); // TODO Will have to populate, although I'm not sure we should ever get to this point
 
     }
 

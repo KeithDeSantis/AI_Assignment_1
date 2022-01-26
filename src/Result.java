@@ -70,7 +70,7 @@ public class Result {
         strBld.append("The actions taken were:\n");
         for (int i = 0; i < actions.length; i++) {
 
-            strBld.append(actions[i]);
+            strBld.append(actions[i] + "\n");
 
         }
 

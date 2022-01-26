@@ -1,14 +1,12 @@
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        String filename = args[1]; // First command line arg, the name of the board file
-        String heuristic = args[2]; // Second command line arg, the number heuristic to use
+        //String filename = args[1]; // First command line arg, the name of the board file
+        //String heuristic = args[2]; // Second command line arg, the number heuristic to use
         BoardReader boardReader = new BoardReader();
         int[][] board = null;
         Coordinate start = new Coordinate(0,0);
@@ -24,7 +22,8 @@ public class Main {
         AStar test = new AStar();
 
         start.setDirection(Direction.N);
-        test.findPath(board, start, goal);
+        Result result = test.findPath(board, start, goal);
+        System.out.println(result);
     }
 
 }
