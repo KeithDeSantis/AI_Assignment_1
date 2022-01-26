@@ -11,7 +11,7 @@ public class Move {
     }
 
     public Move(Coordinate coordinate, int priority){
-        this.coordinate = coordinate;
+        this.coordinate = coordinate; //TODO should we set the direction of the move to the coords direction here to avoid null pointers?
         this.priority = priority;
     }
 
