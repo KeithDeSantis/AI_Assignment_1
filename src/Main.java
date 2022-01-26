@@ -7,31 +7,21 @@ public class Main {
 
     public static void main(String[] args) {
 
+        String filename = args[1]; // First command line arg, the name of the board file
+        String heuristic = args[2]; // Second command line arg, the number heuristic to use
         BoardReader boardReader = new BoardReader();
-
         int[][] board = null;
-
         Coordinate start = new Coordinate(0,0);
         Coordinate goal = new Coordinate(0,0);
 
-        try {
+        try { board = boardReader.read("board.txt", start, goal); } //TODO change input to filename for final
+        catch (IOException e) {
+            System.out.println("Could not find file.");
+            return; }
 
-            board = boardReader.read("board.txt", start, goal);
-            //System.out.println(Arrays.deepToString(board));
-//            System.out.println(board[1][0]);
-
-        } catch (IOException e) { System.out.println("Could not find file.");}
-
-        Coordinate[][] coordBoard = boardReader.translateToCoord(board);
+        Coordinate[][] coordBoard = boardReader.translateToCoord(board); // May end up not being necessary
 
         AStar test = new AStar();
-//        Coordinate s = CoordinateFactory.makeCoorWithPriority(1,0, 3);
-//        Coordinate g = CoordinateFactory.makeCoorWithPriority(2,1, 4);
-//        PriorityQueue<Coordinate> pQueue = new PriorityQueue<>(Comparator.comparingInt(o -> o.priority));
-//        pQueue.add(s);
-//        pQueue.add(g);
-//        System.out.println(pQueue.remove().priority);
-//        System.out.println(pQueue.remove().priority);
 
         start.setDirection(Direction.N);
         test.findPath(board, start, goal);
