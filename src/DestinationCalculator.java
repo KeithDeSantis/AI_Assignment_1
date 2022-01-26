@@ -1,6 +1,6 @@
 public class DestinationCalculator {
 
-    public static Coordinate getNewCoordinate(Coordinate current, Action action){
+    public static Coordinate getNewCoordinate(Move current, Action action){
         switch(action){
             case Left:
             case Right:
@@ -14,12 +14,8 @@ public class DestinationCalculator {
 
     }
 
-    private static DestinationFinder MoveInDirection = (Coordinate current) -> {
-        return new Coordinate(current.getI() + current.direction.i,  current.getI() + current.direction.j);
-    };
+    private static final DestinationFinder MoveInDirection = (Move current) -> new Coordinate(current.getI() + current.getDirection().i,  current.getJ() + current.getDirection().j);
 
-    private static DestinationFinder Turn = (Coordinate current) -> {
-        return current;
-    };
+    private static final DestinationFinder Turn = Move::getCoordinate;
 
 }

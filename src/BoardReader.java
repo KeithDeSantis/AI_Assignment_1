@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class BoardReader {
+    Coordinate start;
+    Coordinate goal;
 
     public BoardReader() {
     }

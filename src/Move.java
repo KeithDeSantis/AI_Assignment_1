@@ -5,9 +5,10 @@ public class Move {
     private int totalCost = 0;
 
     public Move(Move move, Action action, int terrainCost){
-        this.coordinate = DestinationCalculator.getNewCoordinate(move.getCoordinate(), action);
         this.direction = findDirection(action, move.direction);
         this.totalCost = CostCalculator.getNewCost(terrainCost, move.totalCost, action);
+        this.coordinate = DestinationCalculator.getNewCoordinate(move, action);
+
     }
 
     public Move(Coordinate coordinate, int priority){
@@ -47,9 +48,9 @@ public class Move {
     }
 
 
-    public boolean isPossible(int boardMaxX, int boardMaxY){
-        return coordinate.i >= 0 && coordinate.j >= 0
-                && coordinate.j < boardMaxX && coordinate.i < boardMaxY;
+    public static boolean isPossible(int i, int j, int iMax, int jMax){
+        return i >= 0 && j >= 0
+                && j < iMax && i < jMax;
 
     }
 

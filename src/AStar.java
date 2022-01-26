@@ -7,12 +7,17 @@ public class AStar {
     //s and g should have its priority of 0
     //s should have default dir of N
     public void findPath(int[][] board, Coordinate s, Coordinate g){
-        PriorityQueue<Move> pQueue = new PriorityQueue<>(Comparator.comparingInt(o -> o.getPriority()));
-        pQueue.add(new Move(s, 0));
+        PriorityQueue<Move> pQueue = new PriorityQueue<>(Comparator.comparingInt(Move::getPriority));
+        Move firstMove = new Move(s, 0);
+        firstMove.setDirection(Direction.N);
+        pQueue.add(firstMove);
         Map<Coordinate,Coordinate> cameFrom = new HashMap<>();
         Map<Coordinate, Integer> costSoFar = new HashMap<>();
         cameFrom.put(s, null);
         costSoFar.put(s,0);
+
+        int iMax = board.length;
+        int jMax = board[0].length;
 
         while(!pQueue.isEmpty()){
             Move currentMove = pQueue.poll();
@@ -22,6 +27,9 @@ public class AStar {
             if(currentMove.getCoordinate().equals(g)) return; // deals with edge case that start and goal are the same
             for (Action action: Action.values()) {
                 Move nextMove = new Move(currentMove, action, board[currentMove.getI()][currentMove.getJ()]);
+                if(!Move.isPossible(nextMove.getI(), nextMove.getJ(), iMax, jMax)){
+                    continue;
+                }
                 Set<Coordinate> keys = costSoFar.keySet();
 /*                int new_cost = 0;
                 int nextI = 0, nextJ = 0;
@@ -82,29 +90,6 @@ public class AStar {
 
     }
 
-
-
-    public Direction findDirAfterTurnLeft(Direction direction){
-        switch (direction){
-            case E: return Direction.N;
-            case S: return Direction.E;
-            case N: return Direction.W;
-            case W: return Direction.S;
-        }
-        //should never reach here
-        return direction;
-    }
-
-    public Direction findDirAfterTurnRight(Direction direction){
-        switch (direction){
-            case E: return Direction.S;
-            case S: return Direction.W;
-            case N: return Direction.E;
-            case W: return Direction.N;
-        }
-        //should never reach here
-        return direction;
-    }
 
 
 }
