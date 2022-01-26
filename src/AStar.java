@@ -10,9 +10,9 @@ public class AStar {
 
     //s and g should have its priority of 0
     //s should have default dir of N
-    public void findPath(int[][] board, Coordinate s, Coordinate g){
-        PriorityQueue<Move> pQueue = new PriorityQueue<>(Comparator.comparingInt(Move::getPriority));
-        Move firstMove = new Move(s, 0);
+    private Move generatePath(int[][] board, Coordinate s, Coordinate g){
+        PriorityQueue<Move> pQueue = new PriorityQueue<Move>(Comparator.comparingInt(Move::getPriority));
+        firstMove = new Move(s, 0);
         firstMove.setDirection(Direction.N);
         pQueue.add(firstMove);
         Map<Coordinate,Coordinate> cameFrom = new HashMap<>();
@@ -30,11 +30,14 @@ public class AStar {
             boolean hasBashed = false;
             if(currentMove.getCoordinate().equals(g)) return; // deals with edge case that start and goal are the same
             for (Action action: Action.values()) {
-                Move nextMove = new Move(currentMove, action, board[currentMove.getI()][currentMove.getJ()]);
-                if(!Move.isPossible(nextMove.getI(), nextMove.getJ(), iMax, jMax)){
-                    continue;
-                }
-                Set<Coordinate> keys = costSoFar.keySet();
+
+                if(!currentMove.isPossible(action)) continue;
+                Move nextMove;
+                try {
+                    nextMove = new Move(currentMove, action, board);
+                } catch (OutBoundsError e) { continue; }
+
+                Set<Move> keys = costSoFar.keySet();
 
                 Coordinate nextMoveCoordinate = nextMove.getCoordinate();
                 //update the queue accordingly
@@ -43,12 +46,9 @@ public class AStar {
                     int heuristic = heuristicFunction.getHeuristics(nextMove.getCoordinate(), g);
                     nextMove.setPriority(heuristic);
                     pQueue.add(nextMove);
-                    cameFrom.put(nextMove.getCoordinate(), currentMove.getCoordinate());
+                    numNodesExpanded++;
+                    cameFrom.put(nextMove, currentMove);
 
-                    if(hasBashed){// removes the flag
-                        hasBashed = false;
-                        break;
-                    }
                 }
             }
         }

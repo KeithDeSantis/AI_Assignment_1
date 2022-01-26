@@ -4,7 +4,7 @@ public class Coordinate {
     int i;
     int j;
     int priority;
-    Direction direction;
+
     public Coordinate(int i, int j, int priority) {
         this.i = i;
         this.j = j;
@@ -27,10 +27,6 @@ public class Coordinate {
     @Override
     public int hashCode() {
         return Objects.hash(i, j);
-    }
-
-    public void setDirection(Direction direction) {
-        this.direction = direction;
     }
 
     public int getI() {

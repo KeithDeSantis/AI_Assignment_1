@@ -1,14 +1,17 @@
+import java.util.Objects;
+
 public class Move {
     private Coordinate coordinate;
     private Direction direction;
     private int priority = 0;
     private int totalCost = 0;
 
-    public Move(Move move, Action action, int terrainCost){
+    public Move(Move move, Action action, int[][] board) throws OutBoundsError {
         this.direction = findDirection(action, move.direction);
-        this.totalCost = CostCalculator.getNewCost(terrainCost, move.totalCost, action);
+        this.totalCost = CostCalculator.getNewCost(move.totalCost, action, board, move);
         this.coordinate = DestinationCalculator.getNewCoordinate(move, action);
-
+        this.action = action;
+        this.hasBashed = action.equals(Action.Bash);
     }
 
     public Move(Coordinate coordinate, int priority){
@@ -97,4 +100,25 @@ public class Move {
         this.direction = direction;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(coordinate, direction, priority, totalCost );
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj == null || !obj.getClass().equals(Move.class))
+            return false;
+        Move other = (Move) obj;
+
+        return coordinate.equals(other.coordinate) &&
+                direction.equals(other.direction) &&
+                priority == other.priority &&
+                totalCost == other.totalCost;
+    }
+
+    @Override
+    public String toString() {
+        return action.toString();
+    }
 }

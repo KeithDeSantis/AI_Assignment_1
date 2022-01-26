@@ -10,7 +10,7 @@ public class Result {
     public double score;
     public int numActions;
     public int numNodesExpanded;
-    public Set<String> setOfActions;
+    public ArrayList<Move> setOfActions = null;
 
     public Result() {
         this.score = 0.00;
@@ -18,7 +18,7 @@ public class Result {
         this.numNodesExpanded = 0;
     }
 
-    public Result(double score, int numActions, int numNodesExpanded, Set<String> setOfActions) {
+    public Result(double score, int numActions, int numNodesExpanded, ArrayList<Move> setOfActions) {
         this.score = score;
         this.numActions = numActions;
         this.numNodesExpanded = numNodesExpanded;
@@ -49,18 +49,16 @@ public class Result {
         this.numNodesExpanded = numNodesExpanded;
     }
 
-    public Set<String> getSetOfActions() {
+    public ArrayList<Move> getSetOfActions() {
         return setOfActions;
     }
 
-    public void setSetOfActions(Set<String> setOfActions) {
+    public void setSetOfActions(ArrayList<Move> setOfActions) {
         this.setOfActions = setOfActions;
     }
 
     @Override
     public String toString() {
-
-        Object[] actions = this.setOfActions.toArray();
 
         StringBuilder strBld = new StringBuilder();
 
@@ -68,10 +66,8 @@ public class Result {
         strBld.append("The number of actions taken was " + this.numActions + ".\n");
         strBld.append("The number of nodes expanded was " + this.numNodesExpanded + ".\n");
         strBld.append("The actions taken were:\n");
-        for (int i = 0; i < actions.length; i++) {
-
-            strBld.append(actions[i]);
-
+        for ( int i = 1; i < this.setOfActions.size(); i++) {
+            strBld.append(this.setOfActions.get(i) + "\n");
         }
 
         return strBld.toString();

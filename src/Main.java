@@ -19,9 +19,10 @@ public class Main {
 
         Coordinate[][] coordBoard = boardReader.translateToCoord(board);
 
-        AStar test = AStarFactory.produceAstarWithSpecificHeuristics(1);
-        start.setDirection(Direction.N);
-        test.findPath(board, start, goal);
+        AStar test = AStarFactory.produceAstarWithSpecificHeuristics(4);
+        Result result = test.findPath(board, start, goal);
+
+        System.out.println(result);
     }
 
 }
