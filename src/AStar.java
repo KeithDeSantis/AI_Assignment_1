@@ -8,6 +8,19 @@ public class AStar {
         this.heuristicFunction = heuristicFunction;
     }
 
+    public Result findPath(int[][] board, Coordinate s, Coordinate g) {
+        Move lastMove = generatePath(board, s, g);
+
+        if(lastMove == null)
+            return null;
+
+        ArrayList<Move> paths = buildPath(lastMove, firstMove);
+        double score = 100 - lastMove.getTotalCost();
+        int numActions = paths.size();
+
+        return new Result(score, numActions, numNodesExpanded, paths);
+    }
+
     //s and g should have its priority of 0
     //s should have default dir of N
     private Move generatePath(int[][] board, Coordinate s, Coordinate g){
@@ -53,46 +66,29 @@ public class AStar {
             }
         }
     }
+
+    public ArrayList<Move> buildPath(Move lastMove, Move firstMove) {
+
+        ArrayList<Move> movesTaken = new ArrayList<Move>();
+        Stack<Move> tempStack = new Stack();
+
+        Move current = lastMove;
+
+        // traverse path in reverse pushing moves onto the stack
+        while(!current.equals(firstMove)){
+            tempStack.add(current);
+            current = cameFrom.get(current);
+        }
+
+        // Add the first move to the array
+        movesTaken.add(firstMove);
+
+        // Pop the stack to build the path from start to end
+        while (!tempStack.isEmpty())
+            movesTaken.add(tempStack.pop());
+
+        return movesTaken;
+
+    }
 }
-
-
-/*                int new_cost = 0;
-                int nextI = 0, nextJ = 0;
-                Coordinate next=null;
-                Set<Coordinate> keys = costSoFar.keySet();
-                if(action.equals(Action.Forward) || hasBashed){ //case moving forward
-                    //next coor's i j
-                    nextI = cur.i+ curDir.i;
-                    nextJ = cur.j+ curDir.j;
-                    if(nextI < 0 || nextJ < 0){
-                        continue;
-                    }
-                    next = CoordinateFactory.makeOrdinaryCoor(nextI, nextJ);
-                    //cost based on terrain complexity
-                    new_cost = costSoFar.get(cur) + Integer.parseInt(board[nextI][nextJ]);
-                }
-
-                if(action.equals(Action.Bash)){
-                    nextI = cur.i+ curDir.i;
-                    nextJ = cur.j+ curDir.j;
-                    if(nextI < 0 || nextJ < 0){
-                        continue;
-                    }
-                    next = CoordinateFactory.makeOrdinaryCoor(nextI, nextJ);
-                    //cost based on terrain complexity
-                    new_cost = costSoFar.get(cur) + 3; //bash ignores the cost
-                    hasBashed = true;
-                }
-
-                if(action.equals(Action.Left) || action.equals(Action.Right)){
-                    Direction newDir = null;
-                    if(action.equals(Action.Left)){
-                        newDir = findDirAfterTurnLeft(curDir);
-                    }else{
-                        newDir = findDirAfterTurnRight(curDir);
-                    }
-                    next = CoordinateFactory.makeOrdinaryCoor(cur.i, cur.j);
-                    next.setDirection(newDir);
-                    new_cost = (int)Math.ceil(1.5 * costSoFar.get(cur));
-                }*/
 

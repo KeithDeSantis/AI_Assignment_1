@@ -4,7 +4,9 @@ public class Move {
     private Coordinate coordinate;
     private Direction direction;
     private int priority = 0;
+    private Action action;
     private int totalCost = 0;
+    private boolean hasBashed;
 
     public Move(Move move, Action action, int[][] board) throws OutBoundsError {
         this.direction = findDirection(action, move.direction);
@@ -51,10 +53,8 @@ public class Move {
     }
 
 
-    public static boolean isPossible(int i, int j, int iMax, int jMax){
-        return i >= 0 && j >= 0
-                && j < iMax && i < jMax;
-
+    public boolean isPossible(Action action){
+        return !this.hasBashed || (this.hasBashed && action.equals(Action.Forward));
     }
 
     public int getPriority(){
