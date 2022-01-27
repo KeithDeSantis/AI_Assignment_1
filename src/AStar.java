@@ -7,6 +7,7 @@ public class AStar {
     Map<Move, Integer> costSoFar;
     Move firstMove = null;
     int numNodesExpanded = 0;
+    ArrayList<Integer> numValidSteps = new ArrayList();
 
     public AStar(HeuristicFunction.heuristicFunction heuristicFunction){
         this.heuristicFunction = heuristicFunction;
@@ -46,6 +47,7 @@ public class AStar {
 
             boolean hasBashed = false;
             if(currentMove.getCoordinate().equals(g)) return currentMove; // deals with edge case that start and goal are the same
+            int numValidMoves = 0;
             for (Action action: Action.values()) {
 
                 if(!currentMove.isPossible(action)) continue;
@@ -59,6 +61,7 @@ public class AStar {
                 Coordinate nextMoveCoordinate = nextMove.getCoordinate();
                 //update the queue accordingly
                 if(!keys.contains(nextMove) || nextMove.getTotalCost() < costSoFar.get(nextMove)){
+                    numValidMoves++;
                     costSoFar.put(nextMove, nextMove.getTotalCost());
                     int heuristic = heuristicFunction.getHeuristics(nextMove.getCoordinate(), g);
                     nextMove.setPriority(heuristic);
@@ -68,6 +71,7 @@ public class AStar {
 
                 }
             }
+            this.numValidSteps.add(numValidMoves);
         }
         return null;
     }

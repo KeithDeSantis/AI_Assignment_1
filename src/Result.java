@@ -12,18 +12,21 @@ public class Result {
     public int numActions;
     public int numNodesExpanded;
     public ArrayList<Move> setOfActions = null;
+    public double effectiveBranchingFactor;
 
     public Result() {
         this.score = 0.00;
         this.numActions = 0;
         this.numNodesExpanded = 0;
+        this.effectiveBranchingFactor = 0;
     }
 
-    public Result(double score, int numActions, int numNodesExpanded, ArrayList<Move> setOfActions) {
+    public Result(double score, int numActions, int numNodesExpanded, ArrayList<Move> setOfActions, double effectiveBranchingFactor) {
         this.score = score;
         this.numActions = numActions;
         this.numNodesExpanded = numNodesExpanded;
         this.setOfActions = setOfActions;
+        this.effectiveBranchingFactor = effectiveBranchingFactor;
     }
 
     public double getScore() {
@@ -70,6 +73,7 @@ public class Result {
         for ( int i = 1; i < this.setOfActions.size(); i++) {
             strBld.append(this.setOfActions.get(i) + "\n");
         }
+        strBld.append("The effective branching factor was " + this.effectiveBranchingFactor);
 
         return strBld.toString();
     }
