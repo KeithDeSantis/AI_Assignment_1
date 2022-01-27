@@ -20,7 +20,7 @@ public class AStar {
 
         ArrayList<Move> paths = buildPath(lastMove, firstMove);
         double score = 100 - lastMove.getTotalCost();
-        int numActions = paths.size();
+        int numActions = paths.size() - 1;
 
         return new Result(score, numActions, numNodesExpanded, paths);
     }
