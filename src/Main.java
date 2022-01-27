@@ -26,12 +26,18 @@ public class Main {
 
         } catch (IOException e) { System.out.println("Could not find file.");}
 
-        Coordinate[][] coordBoard = boardReader.translateToCoord(board);
+        long startTimer = System.currentTimeMillis();
 
         AStar test = AStarFactory.produceAstarWithSpecificHeuristics(heuristic);
         Result result = test.findPath(board, start, goal);
 
         System.out.println(result);
+
+        long endTimer = System.currentTimeMillis();
+
+        long timeElapsed = (endTimer - startTimer)/1000;
+
+        System.out.println("Program took " + timeElapsed + " seconds");
     }
 
 }
