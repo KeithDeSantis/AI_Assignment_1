@@ -9,6 +9,7 @@ public class AStarFactory {
             case 3: return new AStar(HeuristicFunction.MaxOfVerticalAndHorizontal);
             case 4: return new AStar(HeuristicFunction.SumOfVerticalAndHorizontal);
             case 5: return new AStar(HeuristicFunction.CustomHeuristic);
+            case 6: return new AStar(HeuristicFunction.HeuristicSix);
             default: throw new IllegalArgumentException("unrecognized choice of heuristics");
         }
     }

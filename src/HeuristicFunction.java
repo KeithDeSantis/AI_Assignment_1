@@ -11,6 +11,7 @@ public class HeuristicFunction {
 
     public static heuristicFunction SumOfVerticalAndHorizontal = HeuristicFunction::sumOfVerticalAndHorizontal;
     public static heuristicFunction CustomHeuristic = HeuristicFunction::customHeuristic;
+    public static heuristicFunction HeuristicSix = HeuristicFunction::heuristicSix;
 
     static int noHeuristics(Coordinate cur, Coordinate g){
         return 0;
@@ -33,6 +34,10 @@ public class HeuristicFunction {
             return Math.abs(cur.getI() - g.i) + Math.abs(cur.getJ() - g.j);
         else
             return Math.abs(cur.getI() - g.i) + Math.abs(cur.getJ() - g.j) + 1;
+    }
+
+    static int heuristicSix(Coordinate cur, Coordinate g){
+        return customHeuristic(cur, g) * 3;
     }
 
 
