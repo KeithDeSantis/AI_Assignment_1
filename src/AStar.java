@@ -22,8 +22,9 @@ public class AStar {
         ArrayList<Move> paths = buildPath(lastMove, firstMove);
         double score = 100 - lastMove.getTotalCost();
         int numActions = paths.size() - 1;
+        double averageBranchingFactor = numValidSteps.stream().mapToDouble(a -> a).average().getAsDouble();
 
-        return new Result(score, numActions, numNodesExpanded, paths);
+        return new Result(score, numActions, numNodesExpanded, paths, averageBranchingFactor);
     }
 
     //s and g should have its priority of 0
@@ -38,27 +39,20 @@ public class AStar {
         cameFrom.put(firstMove, null);
         costSoFar.put(firstMove,0);
 
-        int iMax = board.length;
-        int jMax = board[0].length;
-
         while(!pQueue.isEmpty()){
             Move currentMove = pQueue.poll();
-            Direction curDir = currentMove.getDirection();
 
-            boolean hasBashed = false;
             if(currentMove.getCoordinate().equals(g)) return currentMove; // deals with edge case that start and goal are the same
             int numValidMoves = 0;
             for (Action action: Action.values()) {
 
                 if(!currentMove.isPossible(action)) continue;
                 Move nextMove;
-                try {
-                    nextMove = new Move(currentMove, action, board);
-                } catch (OutBoundsError e) { continue; }
+                try { nextMove = new Move(currentMove, action, board); }
+                catch (OutBoundsError e) { continue; }
 
                 Set<Move> keys = costSoFar.keySet();
 
-                Coordinate nextMoveCoordinate = nextMove.getCoordinate();
                 //update the queue accordingly
                 if(!keys.contains(nextMove) || nextMove.getTotalCost() < costSoFar.get(nextMove)){
                     numValidMoves++;
