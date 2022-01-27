@@ -27,7 +27,7 @@ public class BoardReader {
         String line;
 
         // Look at first line to get number of columns
-        String[] firstLine = scanner.nextLine().split(" ");
+        String[] firstLine = scanner.nextLine().split("\t");
 
         int numColumns = firstLine.length;
 
@@ -39,7 +39,7 @@ public class BoardReader {
         // Load each other line into the board
         while(scanner.hasNextLine()) {
             line = scanner.nextLine();
-            board[boardRowNum] = line.split(" ");
+            board[boardRowNum] = line.split("\t");
             boardRowNum++;
 
         }
