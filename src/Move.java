@@ -1,4 +1,5 @@
 import java.util.Objects;
+import java.util.Random;
 
 public class Move {
     private Coordinate coordinate;
@@ -7,18 +8,23 @@ public class Move {
     private Action action;
     private int totalCost = 0;
     private boolean hasBashed;
+    private int id;
 
     public Move(Move move, Action action, int[][] board) throws OutBoundsError {
+        Random random = new Random();
         this.direction = findDirection(action, move.direction);
         this.totalCost = CostCalculator.getNewCost(move.totalCost, action, board, move);
         this.coordinate = DestinationCalculator.getNewCoordinate(move, action);
         this.action = action;
         this.hasBashed = action.equals(Action.Bash);
+        this.id = random.nextInt();
     }
 
     public Move(Coordinate coordinate, int priority){
+        Random random = new Random();
         this.coordinate = coordinate; //TODO should we set the direction of the move to the coords direction here to avoid null pointers?
         this.priority = priority;
+        this.id = random.nextInt();
     }
 
     public Direction findDirection(Action action, Direction currentDirection){
@@ -102,7 +108,7 @@ public class Move {
 
     @Override
     public int hashCode() {
-        return Objects.hash(coordinate, direction, priority, totalCost, action, hasBashed );
+        return Objects.hash(coordinate, direction, priority, totalCost, action, hasBashed, id );
     }
 
     @Override
