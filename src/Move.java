@@ -102,7 +102,7 @@ public class Move {
 
     @Override
     public int hashCode() {
-        return Objects.hash(coordinate, direction, priority, totalCost );
+        return Objects.hash(coordinate, direction, priority, totalCost, action, hasBashed );
     }
 
     @Override
