@@ -11,6 +11,7 @@ public class Main {
         Coordinate start = new Coordinate(0,0);
         Coordinate goal = new Coordinate(0,0);
 
+
         String filename = args[0];
         int heuristic = 0;
         try {
