@@ -17,7 +17,7 @@ public class GenerateBoard {
         GenerateBoard generateBoard = new GenerateBoard();
         for (int i = 0; i < 1; i++) {
             generateBoard.fileWriter.write(System.lineSeparator());
-            generateBoard.generateBoard(6,6);
+            generateBoard.generateBoard(8,8);
             generateBoard.fileWriter.flush();
         }
         generateBoard.fileWriter.close();
