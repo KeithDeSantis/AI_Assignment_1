@@ -2,7 +2,12 @@ import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+
+        // Real main method
+        /*
+        long mem = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+        System.out.println("Start Main: " + mem + "\n"); // To print out memory use for analysis
 
         BoardReader boardReader = new BoardReader();
 
@@ -38,7 +43,11 @@ public class Main {
 
         long timeElapsed = (endTimer - startTimer)/1000;
 
-        System.out.println("Program took " + timeElapsed + " seconds");
+        System.out.println("Program took " + timeElapsed + " seconds\n");
+
+        long mem2 = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+        System.out.println("End Main: " + mem2 + "\n"); // To print out memory use for analysis
+        */
 
         // Alternate main method used for data collection
         /*
@@ -76,6 +85,39 @@ public class Main {
 
         }
         */
+
+        // Finding board that takes 30 seconds
+
+
+
+        long timeTaken = 0;
+        int dimention = 7;
+        while( timeTaken < 25.0 || timeTaken > 45.0){
+
+            System.out.println("Dimension: " + dimention + "--------------------\n");
+            BoardReader boardReader = new BoardReader();
+            Coordinate start = new Coordinate(0,0);
+            Coordinate goal = new Coordinate(0,0);
+
+            GenerateBoard generateBoard = new GenerateBoard();
+            generateBoard.generateBoard(dimention,dimention,1);
+            int[][] board = boardReader.read("random1.txt", start, goal);
+
+            long startTimer = System.currentTimeMillis();
+
+            AStar test = AStarFactory.produceAstarWithSpecificHeuristics(1);
+            Result result = test.findPath(board, start, goal);
+            System.out.println(result);
+
+            long endTimer = System.currentTimeMillis();
+
+            timeTaken = (endTimer - startTimer)/1000;
+
+            System.out.println(timeTaken + "\n");
+
+            //dimention++;
+        }
+
 
     }
 

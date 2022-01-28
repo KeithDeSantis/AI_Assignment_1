@@ -4,10 +4,7 @@ import java.io.IOException;
 import java.util.Random;
 
 public class GenerateBoard {
-    String fileName = "random.txt";
-    File file = new File(fileName);
-    FileWriter fileWriter = new FileWriter(file, true);
-    Random random = new Random();
+
 
 
     public GenerateBoard() throws IOException {
@@ -15,35 +12,58 @@ public class GenerateBoard {
 
     public static void main(String[] args) throws IOException {
         GenerateBoard generateBoard = new GenerateBoard();
-        for (int i = 0; i < 1; i++) {
-            generateBoard.fileWriter.write(System.lineSeparator());
-            generateBoard.generateBoard(8,8);
-            generateBoard.fileWriter.flush();
+        for (int i = 0; i < 10; i++) {
+            generateBoard.generateBoard(6,6, i);
         }
-        generateBoard.fileWriter.close();
-
     }
 
-    public void generateBoard(int boundI, int boundJ) throws IOException {
+    public void generateBoard(int boundI, int boundJ, int index) throws IOException {
+        String fileName = "random"+index+".txt";
+        File file = new File(fileName);
+        FileWriter fileWriter = new FileWriter(file);
+        Random random = new Random();
         int startI = random.nextInt(boundI);
         int startJ = random.nextInt(boundI);
         int goalI = random.nextInt(boundI);
         int goalJ = random.nextInt(boundI);
+        String currentString;
 
         for (int i = 0; i < boundI; i++) {
             for (int j = 0; j < boundJ; j++) {
                 if(i == startI && j == startJ){
-                    fileWriter.write("S" + "\t");
-                    continue;
+                    currentString = "S";
                 }
-                if(i == goalI && j == goalJ){
-                    fileWriter.write("G" + "\t");
-                    continue;
+                else if(i == goalI && j == goalJ){
+                    currentString = "G";
                 }
-                int cur = random.nextInt(9) +1;
-                fileWriter.write(cur + "\t");
+                else {
+                    int cur = random.nextInt(9) + 1;
+                    currentString = "" + cur;
+                }
+//                if(j == boundJ -1){
+//                    fileWriter.write(cur);
+//                }else{
+//                    fileWriter.write(cur + "\t");
+//
+//                }
+//                fileWriter.write(cur + "\t");
+                if ((j == boundJ -1) && (i == boundI -1) ) {
+                    fileWriter.write(currentString);
+                }
+                else if (j == boundJ -1) {
+                    fileWriter.write(currentString + "\n");
+                }
+                else {
+                    fileWriter.write(currentString + "\t");
+                }
+
+                // print a tab if its not boundJ - 1
+
+
             }
-            fileWriter.write(System.lineSeparator());
         }
+        fileWriter.flush();
+        fileWriter.close();
+
     }
 }

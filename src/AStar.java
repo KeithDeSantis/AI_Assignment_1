@@ -42,7 +42,11 @@ public class AStar {
         while(!pQueue.isEmpty()){
             Move currentMove = pQueue.poll();
 
-            if(currentMove.getCoordinate().equals(g)) return currentMove; // deals with edge case that start and goal are the same
+            if(currentMove.getCoordinate().equals(g)) {
+                long mem = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+                System.out.println("Finished Path: " + mem + "\n"); // To print out memory use for analysis
+                return currentMove; // deals with edge case that start and goal are the same
+            }
             int numValidMoves = 0;
             for (Action action: Action.values()) {
 
