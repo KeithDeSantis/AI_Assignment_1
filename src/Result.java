@@ -77,4 +77,15 @@ public class Result {
 
         return strBld.toString();
     }
+
+    public String printActions() {
+
+        StringBuilder strBld = new StringBuilder();
+
+        for ( int i = 1; i < this.setOfActions.size(); i++) {
+            strBld.append(this.setOfActions.get(i) + " ");
+        }
+
+        return strBld.toString();
+    }
 }
