@@ -5,9 +5,6 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         // Real main method
-        /*
-        long mem = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-        System.out.println("Start Main: " + mem + "\n"); // To print out memory use for analysis
 
         BoardReader boardReader = new BoardReader();
 
@@ -41,25 +38,29 @@ public class Main {
 
         long endTimer = System.currentTimeMillis();
 
-        long timeElapsed = (endTimer - startTimer)/1000;
+        long timeElapsed = (endTimer - startTimer);
 
-        System.out.println("Program took " + timeElapsed + " seconds\n");
+        System.out.println("Program took " + timeElapsed + " milliseconds\n");
 
         long mem2 = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
-        System.out.println("End Main: " + mem2 + "\n"); // To print out memory use for analysis
-        */
+        System.out.println("End Main Memory Used: " + mem2 + "\n"); // To print out memory use for analysis
+
 
         // Alternate main method used for data collection
         /*
+        BoardReader boardReader = new BoardReader();
+        int[][] board = null;
+        Coordinate start = new Coordinate(0,0);
+        Coordinate goal = new Coordinate(0,0);
         int[] heuristics = { 1, 2, 3, 4, 5, 6 };
-        String[] files = { "board1.txt", "board2.txt", "board3.txt", "board4.txt", "board5.txt", "board6.txt",
-                "board7.txt", "board8.txt", "board9.txt", "board10.txt",};
+        String[] files = { "board9.txt", "board10.txt"};
 
         for (String i : files) {
 
             System.out.println(i + " tests:\n\n");
 
             for (int j : heuristics) {
+                System.gc();
 
                 System.out.println("Heuristic " + j + "-------------------\n");
 
@@ -71,10 +72,20 @@ public class Main {
                 }
 
                 AStar test = AStarFactory.produceAstarWithSpecificHeuristics(j);
-                Result result = test.findPath(board, start, goal);
 
-                System.out.println("Number Nodes Expanded: " + result.numNodesExpanded + "\n");
-                System.out.println("Effective Branching Factor " + result.effectiveBranchingFactor + "\n");
+                long startTimer = System.currentTimeMillis();
+                Result result = test.findPath(board, start, goal);
+                long endTimer = System.currentTimeMillis();
+
+                System.out.println(result);
+
+                long timeElapsed = (endTimer - startTimer);
+
+                System.out.println("Program took " + timeElapsed + " milliseconds\n");
+
+                long mem2 = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+                System.out.println("End Main Memory Used: " + mem2 + "\n"); // To print out memory use for analysis
+                System.gc();
 
                 if(j == 4) System.out.println("Optimal Path " + result.printActions() + "\n");
                 else if (j ==6) System.out.println("H6 Path " + result.printActions() + "\n");
@@ -86,12 +97,12 @@ public class Main {
         }
         */
 
-        // Finding board that takes 30 seconds
 
 
-
+        // Board time testing
+        /*
         long timeTaken = 0;
-        int dimention = 7;
+        int dimention = 2;
         while( timeTaken < 25.0 || timeTaken > 45.0){
 
             System.out.println("Dimension: " + dimention + "--------------------\n");
@@ -117,6 +128,7 @@ public class Main {
 
             //dimention++;
         }
+         */
 
 
     }
