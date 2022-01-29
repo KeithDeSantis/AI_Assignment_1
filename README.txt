@@ -1,12 +1,24 @@
 Group 30 Assignment 1:
 
-Our source code in enclosed in this zip file. To run our code, the simplest
-method is opening the project folder in your IDE, and configure the command
-line arguments to be "filename of board" and "int choice of heuristic."
-Our 10 example board are in the project directory. Should you want to test
-a board using this method, make sure it is within the Assignment1 directory.
 
-If you prefer to make the project then run it, navigate into the src directory
-and use "javac Main.java" to make the .class files. Then, make sure your 
-board.txt is in the same folder as the .class files and call
-"java Main filename heuristic."
+Our source code in enclosed in this zip file, in the A Star project folder. 
+
+To run our code, navigate to the astar.jar file's directory, and input 
+
+java -jar ./astar.jar <path to filename> <heuristic integer>
+
+Ensure the filename is a valid path or is to a file in the same directory as astar.jar.
+
+
+For example, our ten boards are in the same directory and can be run with heuristics 1-6.
+
+
+If there are issue or you'd prefer to run the code in an IDE, open the A Star project folder in your IDE and run Main.java with the appropriate argument configurations ( <filename> <heuristic integer> ). In this case, ensure the board.txt file is in the project directory, but not necessarily in the src folder.
+
+NOTE ** The IDE we used was Intellij, other IDE's may need additional setup.
+
+
+If you have any issues running our code please reach out to us:
+kwdesantis@wpi.edu
+jhiggins@wpi.edu
+ywang33@wpi.edu
