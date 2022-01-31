@@ -21,10 +21,11 @@ public class AStar {
 
         ArrayList<Move> paths = buildPath(lastMove, firstMove);
         double score = 100 - lastMove.getTotalCost();
-        int numActions = paths.size() - 1;
-        double averageBranchingFactor = numValidSteps.stream().mapToDouble(a -> a).average().getAsDouble();
+        float numActions = paths.size() - 1;
+        //double averageBranchingFactor = numValidSteps.stream().mapToDouble(a -> a).average().getAsDouble();
+        double averageBranchingFactor = Math.pow(numNodesExpanded, 1/numActions); //POSSIBLE OTHER WAY TO GET EFB through b^d = spaceComplexity?
 
-        return new Result(score, numActions, numNodesExpanded, paths, averageBranchingFactor);
+        return new Result(score, (int)numActions, numNodesExpanded, paths, averageBranchingFactor);
     }
 
     //s and g should have its priority of 0
