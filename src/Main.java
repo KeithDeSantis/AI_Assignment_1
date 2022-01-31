@@ -53,7 +53,8 @@ public class Main {
         Coordinate start = new Coordinate(0,0);
         Coordinate goal = new Coordinate(0,0);
         int[] heuristics = { 1, 2, 3, 4, 5, 6 };
-        String[] files = { "board9.txt", "board10.txt"};
+        String[] files = { "board1.txt", "board2.txt", "board3.txt", "board4.txt", "board5.txt", "board6.txt", "board7.txt",
+                "board8.txt", "board9.txt", "board10.txt"};
 
         for (String i : files) {
 
