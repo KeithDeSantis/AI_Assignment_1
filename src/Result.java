@@ -61,6 +61,20 @@ public class Result {
         this.setOfActions = setOfActions;
     }
 
+    public StringBuilder getValues() {
+        StringBuilder strBld = new StringBuilder();
+        strBld.append(this.numNodesExpanded + "\t");
+        strBld.append(this.effectiveBranchingFactor + "\t");
+        strBld.append(this.numActions + "\t");
+        strBld.append(this.score + "\t");
+        for ( int i = 1; i < this.setOfActions.size(); i++) {
+            strBld.append(this.setOfActions.get(i).toString().charAt(0));
+        }
+        strBld.append("\t");
+
+        return strBld;
+    }
+
     @Override
     public String toString() {
 

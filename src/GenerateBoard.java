@@ -12,8 +12,8 @@ public class GenerateBoard {
 
     public static void main(String[] args) throws IOException {
         GenerateBoard generateBoard = new GenerateBoard();
-        for (int i = 0; i < 10; i++) {
-            generateBoard.generateBoard(6,6, i);
+        for (int i = 0; i < 1; i++) {
+            generateBoard.generateBoard(60,60, i);
         }
     }
 

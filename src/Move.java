@@ -108,7 +108,7 @@ public class Move {
 
     @Override
     public int hashCode() {
-        return Objects.hash(coordinate, direction, priority, totalCost, action, hasBashed, id );
+        return Objects.hash(coordinate, action, direction);
     }
 
     @Override
@@ -117,10 +117,12 @@ public class Move {
             return false;
         Move other = (Move) obj;
 
-        return coordinate.equals(other.coordinate) &&
-                direction.equals(other.direction) &&
-                priority == other.priority &&
-                totalCost == other.totalCost;
+        return coordinate.equals(other.coordinate)
+                && ( (action == null && other.action == null) || action.equals(other.action))
+                && direction.equals(direction);
+//                direction.equals(other.direction) &&
+//                priority == other.priority &&
+//                totalCost == other.totalCost;
     }
 
     @Override
