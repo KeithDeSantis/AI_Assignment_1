@@ -60,7 +60,7 @@ public class AStar {
                 if(!keys.contains(nextMove) || nextMove.getTotalCost() < costSoFar.get(nextMove)){
                     numValidMoves++;
                     costSoFar.put(nextMove, nextMove.getTotalCost());
-                    int heuristic = heuristicFunction.getHeuristics(nextMove.getCoordinate(), g);
+                    int heuristic = heuristicFunction.getHeuristics(nextMove.getCoordinate(), g, nextMove.getDirection());
                     nextMove.setPriority(heuristic);
                     pQueue.add(nextMove);
                     numNodesExpanded++;

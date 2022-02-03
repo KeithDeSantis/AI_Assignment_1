@@ -2,7 +2,7 @@ public class HeuristicFunction {
 
     @FunctionalInterface
     public interface heuristicFunction{
-        int getHeuristics(Coordinate cur, Coordinate g);
+        int getHeuristics(Coordinate cur, Coordinate g, Direction d);
     }
 
     public static heuristicFunction NoHeuristics = HeuristicFunction::noHeuristics;
@@ -13,31 +13,49 @@ public class HeuristicFunction {
     public static heuristicFunction CustomHeuristic = HeuristicFunction::customHeuristic;
     public static heuristicFunction HeuristicSix = HeuristicFunction::heuristicSix;
 
-    static int noHeuristics(Coordinate cur, Coordinate g){
+    static int noHeuristics(Coordinate cur, Coordinate g, Direction d){
         return 0;
     }
 
-    static int minOfVerticalAndHorizontal(Coordinate cur, Coordinate g){
+    static int minOfVerticalAndHorizontal(Coordinate cur, Coordinate g, Direction d){
         return Math.min(Math.abs(cur.getI() - g.i), Math.abs(cur.getJ() - g.j));
     }
 
-    static int maxOfVerticalAndHorizontal(Coordinate cur, Coordinate g){
+    static int maxOfVerticalAndHorizontal(Coordinate cur, Coordinate g, Direction d){
         return Math.max(Math.abs(cur.getI() - g.i), Math.abs(cur.getJ() - g.j));
     }
 
-    static int sumOfVerticalAndHorizontal(Coordinate cur, Coordinate g){
+    static int sumOfVerticalAndHorizontal(Coordinate cur, Coordinate g, Direction d){
         return Math.abs(cur.getI() - g.i) + Math.abs(cur.getJ() - g.j);
     }
 
-    static int customHeuristic(Coordinate cur, Coordinate g){
-        if (cur.getI() == g.getI() || cur.getJ() == g.getJ())
-            return Math.abs(cur.getI() - g.i) + Math.abs(cur.getJ() - g.j);
+    static int customHeuristic(Coordinate cur, Coordinate g, Direction d){
+        int horzAndVert = sumOfVerticalAndHorizontal(cur, g, d);
+        if(requiresTwoTurns(cur, g, d))
+            return horzAndVert + 2;
+        else if (cur.getI() == g.getI() || cur.getJ() == g.getJ())
+            return horzAndVert;
         else
-            return Math.abs(cur.getI() - g.i) + Math.abs(cur.getJ() - g.j) + 1;
+            return horzAndVert + 1;
     }
 
-    static int heuristicSix(Coordinate cur, Coordinate g){
-        return customHeuristic(cur, g) * 3;
+    private static boolean requiresTwoTurns(Coordinate cur, Coordinate g, Direction d) {
+        switch (d) {
+            case N:
+                return cur.getI() < g.getI();
+            case S:
+                return cur.getI() > g.getI();
+            case E:
+                return cur.getJ() > g.getJ();
+            case W:
+                return cur.getJ() < g.getJ();
+            default:
+                return false;
+        }
+    }
+
+    static int heuristicSix(Coordinate cur, Coordinate g, Direction d){
+        return customHeuristic(cur, g, d) * 3;
     }
 
 

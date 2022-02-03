@@ -64,12 +64,12 @@ public class Main {
 
         long endTimer = System.currentTimeMillis();
 
-        long timeElapsed = (endTimer - startTimer);
+        double timeElapsed = (endTimer - startTimer) / 1000.0;
         long mem2 = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
         if(!isTest) {
             System.out.println(result);
-            System.out.print("Program took " + timeElapsed + " milliseconds");
-            System.out.print("End Main Memory Used: " + mem2 + "\n"); // To print out memory use for analysis
+            System.out.println("Program took " + timeElapsed + " seconds");
+            System.out.println("End Main Memory Used: " + mem2); // To print out memory use for analysis
         }
         else {
             StringBuilder values = result.getValues();
